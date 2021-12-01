@@ -101,7 +101,7 @@ def verify_user():
     user = db.session.query(User).filter(User.username == username).first()
 
     if user is None:
-        return jsonify('User NOT found.')
+        return jsonify('User not found.')
 
     if bcrypt.check_password_hash(user.password, password) == False:
         return jsonify('Incorrect password.')
