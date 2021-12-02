@@ -76,7 +76,7 @@ def add_user():
     possible_duplicate = db.session.query(User).filter(User.username == username).first()
 
     if possible_duplicate is not None:
-        unsuccessful = ['Error: That username is already taken:', username]
+        unsuccessful = ['That username is taken.', username]
         return jsonify(unsuccessful)
 
     encrypted_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -136,6 +136,9 @@ def delete_user_by_id(id):
 def update_user_by_id(id):
     if request.content_type != "application/json":
         return jsonify("Error: Data must be formatted as JSON.")
+
+    if id == None:
+        return jsonify("Error: I can't update without a user ID.")
 
     post_data = request.get_json()
     username = post_data.get('username')
