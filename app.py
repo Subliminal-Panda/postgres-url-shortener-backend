@@ -72,7 +72,7 @@ def delete_link(link):
     return jsonify(successful)
 
 @app.route("/url/delete/id/<id>", methods=['DELETE'])
-def delete_link(id):
+def delete_link_by_id(id):
     link_by_id = db.session.query(Link).filter(Link.id == id).first()
     db.session.delete(link_by_id)
     db.session.commit()
