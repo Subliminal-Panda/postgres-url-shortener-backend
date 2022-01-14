@@ -34,8 +34,14 @@ def add_url():
         return jsonify("Error: Data must be formatted as JSON.")
 
     post_data = request.get_json()
-    stored_url = post_data.get("url")
-    stored_link = post_data.get("custom link")
+    stored_url = post_data.get("stored_url")
+    stored_link = post_data.get("stored_link")
+
+    possible_duplicate = db.session.query(Link).filter(Link.stored_url == stored_url).first()
+
+    if possible_duplicate is not None:
+        unsuccessful = ['That link is taken.', stored_url]
+        return jsonify(unsuccessful)
 
     new_link = Link(stored_url, stored_link)
 
