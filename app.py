@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://bogyliizsxovqh:840f94a6715b0db914cf8f9e85c6cbfef5a28715a9360c45035a301d648cc82b@ec2-3-227-15-75.compute-1.amazonaws.com:5432/d82ac9nbeq3255"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL?sslmode=require').replace('postgres://', 'postgresql://')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
