@@ -6,9 +6,6 @@ from flask_bcrypt import Bcrypt
 import psycopg2
 import os
 
-import random
-import string
-
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://yscghqqerxizxq:fa0b50341d56eef162e9f5e13bc7b718274f7ff10f2419e525de2f05bf1fa7c9@ec2-34-195-69-118.compute-1.amazonaws.com:5432/d3ribmkrmp9us1"
@@ -16,7 +13,6 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
 bcrypt = Bcrypt(app)
-
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -162,6 +158,8 @@ def update_user_by_id(id):
 
     user = db.session.query(User).filter(User.id == id).first()
 
+# create a secure way to update username and password
+
     if chess_checkmate_wins != None:
         user.chess_checkmate_wins += 1
     if chess_resignation_wins != None:
@@ -189,45 +187,6 @@ def update_user_by_id(id):
     successful = ["user updated:", user_schema.dump(user)]
     return jsonify(successful)
 
-class Link(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    stored_url = db.Column(db.String, nullable=False)
-    link = db.Column(db.String, nullable=False)
-
-
-
-    def __init__(self, id, stored_url, link):
-        self.id = id
-        self.stored_url = stored_url
-        self.link = link
-
-class LinkSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'stored_url', 'link')
-
-link_schema = LinkSchema()
-multiple_link_schema = LinkSchema(many=True)
-
-
-@app.route('/url/add', methods=["POST"])
-def add_url():
-    if request.content_type != 'application/json':
-        return jsonify('Error: Data must be Formatted as JSON.')
-
-    post_data = request.get_json()
-    stored_url = post_data.get('url')
-    custom_link = post_data.get('custom_link')
-    if custom_link == None:
-        link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
-    else:
-        link = custom_link
-
-    new_link = Link(id, stored_url, link)
-
-    db.session.add(new_link)
-    db.session.commit()
-    successful = ["New URL added to database:", link_schema.dump(new_link)]
-    return jsonify(successful)
 
 if __name__ == "__main__":
     app.run(debug=True)
