@@ -63,12 +63,13 @@ def get_link(link):
     found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
 
-@app.route('/url/delete/<link>', methods=["DELETE"])
+@app.route("/url/delete/<link>", methods=['DELETE'])
 def delete_link(link):
-    link_to_delete = db.session.query(Link).filter(Link.stored_link == link).first()
-    db.session.delete(link_to_delete)
+    link = db.session.query(Link).filter(Link.stored_link == link).first()
+    db.session.delete(link)
     db.session.commit()
-    return jsonify("link has been deleted:", link))
+    successful = ["The following user account has been deleted:", link_schema.dump(link)]
+    return jsonify(successful)
 
 if __name__ == "__main__":
     app.run(debug=True)
