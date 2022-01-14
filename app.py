@@ -60,12 +60,12 @@ def get_all_links():
 
 @app.route('/url/get/link/<link>', methods=["GET"])
 def get_link(link):
-    found_link = db.session.query(Link).filter(Link.stored_link == stored_link).first()
+    found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
 
 @app.route('/url/delete/<link>', methods=["DELETE"])
 def delete_link(link):
-    link_to_delete = db.session.query(Link).filter(Link.stored_link == stored_link).first()
+    link_to_delete = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify("link has been deleted:", link_schema.dump(link_to_delete))
 
 if __name__ == "__main__":
