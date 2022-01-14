@@ -14,6 +14,39 @@ ma = Marshmallow(app)
 CORS(app)
 bcrypt = Bcrypt(app)
 
+class Link(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    stored_url = db.Column(db.String, nullable=False)
+    stored_link = db.Column(db.String, nullable=False)
+
+    def __init__(self, stored_url, stored_link):
+        self.stored_url = stored_url
+        self.stored_link = stored_link
+
+class LinkSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'stored_url', 'stored_link')
+
+link_schema = LinkSchema()
+multiple_link_schema = LinkSchema(many=True)
+
+@app.route('/url/add', methods=['POST'])
+def add_url():
+    if request.content_type != 'application/json':
+        return jsonify("Error: Data must be formatted as JSON.")
+
+    post_data = request.get_json()
+    stored_url = post_data.get("url")
+    stored_link = post_data.get("custom link")
+
+    new_link = Link(stored_url, stored_link)
+
+    db.session.add(new_link)
+    db.session.commit()
+
+    successful = ["New link added to database:", link_schema.dump(new_link)]
+    return jsonify(successful)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
