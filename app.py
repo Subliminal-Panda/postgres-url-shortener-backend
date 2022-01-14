@@ -6,6 +6,9 @@ from flask_bcrypt import Bcrypt
 import psycopg2
 import os
 
+import random
+import string
+
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://yscghqqerxizxq:fa0b50341d56eef162e9f5e13bc7b718274f7ff10f2419e525de2f05bf1fa7c9@ec2-34-195-69-118.compute-1.amazonaws.com:5432/d3ribmkrmp9us1"
@@ -188,7 +191,7 @@ def update_user_by_id(id):
 
 class Url(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String, unique=False, nullable=False)
+    url = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=True)
 
 
