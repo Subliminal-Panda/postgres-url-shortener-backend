@@ -189,24 +189,24 @@ def update_user_by_id(id):
     successful = ["user updated:", user_schema.dump(user)]
     return jsonify(successful)
 
-class Url(db.Model):
+class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String, nullable=False)
-    key = db.Column(db.String, nullable=True)
+    stored_url = db.Column(db.String, nullable=False)
+    link = db.Column(db.String, nullable=True)
 
 
 
-    def __init__(self, id, url, key):
+    def __init__(self, id, stored_url, link):
         self.id = id
-        self.url = url
-        self.key = key
+        self.stored_url = stored_url
+        self.link = link
 
-class UrlSchema(ma.Schema):
+class LinkSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'url', 'key')
+        fields = ('id', 'stored_url', 'key')
 
-url_schema = UrlSchema()
-multiple_url_schema = UrlSchema(many=True)
+link_schema = LinkSchema()
+multiple_link_schema = LinkSchema(many=True)
 
 
 @app.route('/url/add', methods=["POST"])
@@ -215,18 +215,18 @@ def add_url():
         return jsonify('Error: Data must be Formatted as JSON.')
 
     post_data = request.get_json()
-    url = post_data.get('url')
+    stored_url = post_data.get('url')
     custom_link = post_data.get('custom link')
     if custom_link == None:
-        key = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+        link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
     else:
-        key = custom_link
+        link = custom_link
 
-    new_url = Url(id, url, key)
+    new_link = Link(id, stored_url, link)
 
-    db.session.add(new_url)
+    db.session.add(new_link)
     db.session.commit()
-    successful = ["New URL added to database:", url_schema.dump(new_url)]
+    successful = ["New URL added to database:", link_schema.dump(new_link)]
     return jsonify(successful)
 
 if __name__ == "__main__":
