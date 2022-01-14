@@ -37,7 +37,7 @@ def add_url():
     stored_url = post_data.get("stored_url")
     stored_link = post_data.get("stored_link")
 
-    if stored_link == "":
+    if stored_link == "_empty_":
         saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
     else:
         saved_link = stored_link
