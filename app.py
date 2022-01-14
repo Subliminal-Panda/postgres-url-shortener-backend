@@ -12,6 +12,36 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
 
+def create_table():
+    """ create tables in the PostgreSQL database"""
+    commands = (
+        """
+        CREATE TABLE link (
+            link_id SERIAL PRIMARY KEY,
+            stored_url VARCHAR(255) NOT NULL
+            stored_link VARCHAR(255)
+        )
+        """)
+    conn = None
+    try:
+        # read the connection parameters
+        params = config()
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        # create table one by one
+        for command in commands:
+            cur.execute(command)
+        # close communication with the PostgreSQL database server
+        cur.close()
+        # commit the changes
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stored_url = db.Column(db.String, nullable=False)
@@ -43,7 +73,7 @@ def add_url():
         unsuccessful = ['That link is taken.', stored_url]
         return jsonify(unsuccessful)
 
-    new_link = Link(stored_url, stored_link)
+    new_link = Link(stored_url + stored_link)
 
     db.session.add(new_link)
     db.session.commit()
