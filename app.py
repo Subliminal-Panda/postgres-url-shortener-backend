@@ -10,7 +10,7 @@ import string
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://bogyliizsxovqh:840f94a6715b0db914cf8f9e85c6cbfef5a28715a9360c45035a301d648cc82b@ec2-3-227-15-75.compute-1.amazonaws.com:5432/d82ac9nbeq3255"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
