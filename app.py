@@ -71,5 +71,13 @@ def delete_link(link):
     successful = ["The following link has been deleted:", link_schema.dump(link)]
     return jsonify(successful)
 
+@app.route("/url/delete/id/<id>", methods=['DELETE'])
+def delete_link(id):
+    link = db.session.query(Link).filter(Link.id == id).first()
+    db.session.delete(link)
+    db.session.commit()
+    successful = ["The following link has been deleted:", link_schema.dump(link)]
+    return jsonify(successful)
+
 if __name__ == "__main__":
     app.run(debug=True)
