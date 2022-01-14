@@ -192,7 +192,7 @@ def update_user_by_id(id):
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stored_url = db.Column(db.String, nullable=False)
-    link = db.Column(db.String, nullable=True)
+    link = db.Column(db.String, nullable=False)
 
 
 
@@ -216,7 +216,7 @@ def add_url():
 
     post_data = request.get_json()
     stored_url = post_data.get('url')
-    custom_link = post_data.get('custom link')
+    custom_link = post_data.get('custom_link')
     if custom_link == None:
         link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
     else:
