@@ -14,6 +14,7 @@ ma = Marshmallow(app)
 CORS(app)
 bcrypt = Bcrypt(app)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -158,8 +159,6 @@ def update_user_by_id(id):
 
     user = db.session.query(User).filter(User.id == id).first()
 
-# create a secure way to update username and password
-
     if chess_checkmate_wins != None:
         user.chess_checkmate_wins += 1
     if chess_resignation_wins != None:
@@ -187,6 +186,45 @@ def update_user_by_id(id):
     successful = ["user updated:", user_schema.dump(user)]
     return jsonify(successful)
 
+class Url(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String, unique=False, nullable=False)
+    key = db.Column(db.String, nullable=True)
+
+
+
+    def __init__(self, id, url, key):
+        self.id = id
+        self.url = url
+        self.key = key
+
+class UrlSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'url', 'key')
+
+url_schema = UrlSchema()
+multiple_url_schema = UrlSchema(many=True)
+
+
+@app.route('/url/add', methods=["POST"])
+def add_url():
+    if request.content_type != 'application/json':
+        return jsonify('Error: Data must be Formatted as JSON.')
+
+    post_data = request.get_json()
+    url = post_data.get('url')
+    custom_link = post_data.get('custom link')
+    if custom_link == None:
+        key = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+    else:
+        key = custom_link
+
+    new_url = Url(id, url, key)
+
+    db.session.add(new_url)
+    db.session.commit()
+    successful = ["New URL added to database:", url_schema.dump(new_url)]
+    return jsonify(successful)
 
 if __name__ == "__main__":
     app.run(debug=True)
