@@ -37,7 +37,7 @@ def add_url():
     stored_url = post_data.get("stored_url")
     stored_link = post_data.get("stored_link")
 
-    new_link = Link(stored_url + stored_link)
+    new_link = Link(stored_url, stored_link)
 
     db.session.add(new_link)
     db.session.commit()
