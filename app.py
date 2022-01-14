@@ -37,7 +37,12 @@ def add_url():
     stored_url = post_data.get("stored_url")
     stored_link = post_data.get("stored_link")
 
-    new_link = Link(stored_url, stored_link)
+    if stored_link != None:
+        saved_link = stored_link
+    else:
+        saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+
+    new_link = Link(stored_url, saved_link)
 
     db.session.add(new_link)
     db.session.commit()
