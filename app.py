@@ -42,6 +42,11 @@ def add_link():
 
     if stored_link == "":
         saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+        possible_duplicate = db.session.query(Link).filter(Link.stored_link == saved_link).first()
+
+        while possible_duplicate is not None:
+            saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+            possible_duplicate = db.session.query(Link).filter(Link.stored_link == saved_link).first()
     else:
         saved_link = stored_link
 
