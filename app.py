@@ -66,7 +66,7 @@ def get_link(link):
 @app.route('/url/delete/<link>', methods=["DELETE"])
 def delete_link(link):
     link_to_delete = db.session.query(Link).filter(Link.stored_link == link).first()
-    return jsonify("link has been deleted:", link_schema.dump(link_to_delete))
+    return jsonify("link has been deleted:", link))
 
 if __name__ == "__main__":
     app.run(debug=True)
