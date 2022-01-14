@@ -32,7 +32,7 @@ link_schema = LinkSchema()
 multiple_link_schema = LinkSchema(many=True)
 
 @app.route('/url/add', methods=['POST'])
-def add_url():
+def add_link():
     if request.content_type != 'application/json':
         return jsonify("Error: Data must be formatted as JSON.")
 
@@ -52,6 +52,21 @@ def add_url():
 
     successful = ["New link added to database:", link_schema.dump(new_link)]
     return jsonify(successful)
+
+@app.route('/url/get', methods=["GET"])
+def get_all_links():
+    all_links = db.session.query(Link).all()
+    return jsonify(multiple_link_schema.dump(all_links))
+
+@app.route('/url/get/link/<link>', methods=["GET"])
+def get_link(link):
+    found_link = db.session.query(Link).filter(Link.stored_link == stored_link).first()
+    return jsonify(link_schema.dump(found_link))
+
+@app.route('/url/delete/<link>', methods=["DELETE"])
+def delete_link(link):
+    link_to_delete = db.session.query(Link).filter(Link.stored_link == stored_link).first()
+    return jsonify("link has been deleted:", link_schema.dump(link_to_delete))
 
 if __name__ == "__main__":
     app.run(debug=True)
