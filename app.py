@@ -68,7 +68,7 @@ def delete_link(link):
     link = db.session.query(Link).filter(Link.stored_link == link).first()
     db.session.delete(link)
     db.session.commit()
-    successful = ["The following user account has been deleted:", link_schema.dump(link)]
+    successful = ["The following link has been deleted:", link_schema.dump(link)]
     return jsonify(successful)
 
 if __name__ == "__main__":
