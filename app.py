@@ -203,7 +203,7 @@ class Link(db.Model):
 
 class LinkSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'stored_url', 'key')
+        fields = ('id', 'stored_url', 'link')
 
 link_schema = LinkSchema()
 multiple_link_schema = LinkSchema(many=True)
