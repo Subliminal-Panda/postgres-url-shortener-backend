@@ -16,7 +16,9 @@ INTRODUCTION: BACKEND/API
 
  2. When you're at the proper directory, run the following command:
 
-  $ gh repo clone Subliminal-Panda/postgres-url-shortener-backend
+      $ gh repo clone Subliminal-Panda/postgres-url-shortener-backend
+
+* If you want to run this app entirely on your own computer, you'll have to follow the steps toward the bottom, under CLONING AND RUNNING THE FRONTEND REPOSITORY as well as CLONING AND RUNNING THE BACKEND REPOSITORY.
 
 INTRODUCTION: USING THE APP
 ------------
@@ -27,7 +29,7 @@ INTRODUCTION: USING THE APP
 
 https://codesandbox.io/s/beautiful-noyce-j499o?
 
-*If you'd like to try this application outside codesandbox, skip down to CLONING THE FRONTEND REPOSITORY.
+*If you'd like to try this application outside codesandbox, skip down to CLONING AND RUNNING THE FRONTEND REPOSITORY.
 
 * To enter a URL, click the input field titled "Enter a new URL:" and enter your desired destination URL.
 
@@ -52,7 +54,7 @@ REQUIREMENTS: CODE SANDBOX
  - react-dom
  - react-scripts
 
-CLONING THE FRONTEND REPOSITORY
+CLONING AND RUNNING THE FRONTEND REPOSITORY
 ------------
 
 * If you'd like to try this application outside codesandbox:
@@ -61,7 +63,7 @@ CLONING THE FRONTEND REPOSITORY
 
  2. When you're at the proper directory, run the following command:
 
-  $ gh repo clone Subliminal-Panda/postgres-url-shortener-frontend
+      $ gh repo clone Subliminal-Panda/postgres-url-shortener-frontend
 
  3. If you don't have npm already, install it at the following link:
 
@@ -69,11 +71,61 @@ CLONING THE FRONTEND REPOSITORY
 
  4. You'll also need to install scss and sass via npm. Once you've got npm, run the following commands in your terminal:
 
-  $ npm install sass
-  $ npm install compile-sass
+      $ npm install sass
+      $ npm install compile-sass
 
  5. Then run it:
 
-  $ npm start
+      $ npm start
 
-That should do it! The backend is always running, so you don't need to do anything special for that.
+*  That should do it! The backend is always running, so you don't need to do anything special for that. However, if you would like to run this entirely on your own machine (in a test environment) you'll have to do the following:
+
+CLONING AND RUNNING THE BACKEND REPOSITORY
+------------
+
+  1. Install python, if you don't already have it:
+
+      https://www.python.org/downloads/
+
+  2. Clone the backend repository, if you haven't already- go to a directory where you're comfortable cloning an app, then run this in your terminal:
+
+          $ gh repo clone Subliminal-Panda/postgres-url-shortener-backend
+
+  3. Install PIP via the terminal, if you don't already have it:
+
+          $ python -m ensurepip --upgrade
+
+  4. Install Pipenv:
+
+          $ pip install pipenv
+
+  5. Enter a pipenv shell environment:
+
+          $ pipenv shell
+
+  6. Install the following dependencies within your pipenv shell environment:
+
+          $ pipenv install flask flask_sqlalchemy flask_marshmallow flask_cors psycopg2
+
+  7. To change the db to your local environment, delete line 12 in app.py, and in its place, paste:
+
+          app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+
+  8. Start python:
+
+          $ python
+
+  9. Run the following commands using Python:
+
+          > from app import db
+          > db.create_all()
+
+  10. If that doesn't return any errors, your test environment database is created! Now let's get it running:
+
+          $ python app.py
+
+  11. Alright, the backend is running on your local machine. Now, you'll have to change every endpoint in the frontend to wherever the database is running on your local machine. If you haven't already, follow the instructions in CLONING THE FRONTEND REPOSITORY.
+
+  12. Now, in your cloned front-end repository, replace all instances of "https://tm-url-shortener-backend.herokuapp.com/" (yes, it's a lot, but you can use VS Code's search if you use Visual Studio Code.) replace them all with the location where the database is running on your computer. The terminal should say *Running on (Most likely it will be: "http://127.0.0.1:5000/").
+
+  13. Alright, you've got a working backend and frontend running on your computer! Baddabing!
