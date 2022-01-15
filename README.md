@@ -71,3 +71,9 @@ CLONING THE FRONTEND REPOSITORY
 
   $ npm install sass
   $ npm install compile-sass
+
+ 5. Then run it:
+
+  $ npm start
+
+That should do it! The backend is always running, so you don't need to do anything special for that.
