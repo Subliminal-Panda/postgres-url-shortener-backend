@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
 
-# creates link class and
+# creates link class
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,9 +35,11 @@ class LinkSchema(ma.Schema):
 link_schema = LinkSchema()
 multiple_link_schema = LinkSchema(many=True)
 
+
+
 # route to add a new link:
 
-@app.route('/url/add', methods=['POST'])
+@app.route('/nodirect/add')
 def add_link():
     if request.content_type != 'application/json':
         return jsonify("Error: Data must be formatted as JSON.")
@@ -76,21 +78,21 @@ def add_link():
 
 # route to retrieve all links:
 
-@app.route('/url/get', methods=["GET"])
+@app.route('/nodirect/get')
 def get_all_links():
     all_links = db.session.query(Link).all()
     return jsonify(multiple_link_schema.dump(all_links))
 
 # route to retrieve one link:
 
-@app.route('/url/get/link/<link>', methods=["GET"])
+@app.route('/nodirect/get/<link>')
 def get_link(link):
     found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
 
 # route to delete one link by its shortlink name:
 
-@app.route("/url/delete/<link>", methods=['DELETE'])
+@app.route("/nodirect/delete/<link>")
 def delete_link(link):
     link = db.session.query(Link).filter(Link.stored_link == link).first()
     db.session.delete(link)
@@ -100,13 +102,31 @@ def delete_link(link):
 
 # route to delete one link by its unique id:
 
-@app.route("/url/delete/id/<id>", methods=['DELETE'])
+@app.route("/nodirect/delete/<id>")
 def delete_link_by_id(id):
     link_by_id = db.session.query(Link).filter(Link.id == id).first()
     db.session.delete(link_by_id)
     db.session.commit()
     successful = ["The following link has been deleted:", link_schema.dump(link_by_id)]
     return jsonify(successful)
+
+# routes directing to main app page:
+
+@app.route('/')
+    return redirect('/nodirect')
+
+@app.route('/nodirect')
+    return "redirected to main application."
+
+# redirect routes for stored links:
+
+@app.route('/<link>')
+def direct(link):
+    direct_url = db.session.query(Link).filter(Link.stored_link == link).first()
+    if direct_url is not None:
+        return redirect(url_for(direct_url.stored_url))
+    else:
+        return redirect('/nodirect')
 
 if __name__ == "__main__":
     app.run(debug=True)
