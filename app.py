@@ -39,7 +39,7 @@ multiple_link_schema = LinkSchema(many=True)
 
 # route to add a new link:
 
-@app.route('/nodirect/add')
+@app.route('/nodirect/links', methods=['POST'])
 def add_link():
     if request.content_type != 'application/json':
         return jsonify("Error: Data must be formatted as JSON.")
@@ -78,21 +78,21 @@ def add_link():
 
 # route to retrieve all links:
 
-@app.route('/nodirect/get')
+@app.route('/nodirect/links' methods=['GET'])
 def get_all_links():
     all_links = db.session.query(Link).all()
     return jsonify(multiple_link_schema.dump(all_links))
 
 # route to retrieve one link:
 
-@app.route('/nodirect/get/<link>')
+@app.route('/nodirect/links/<link>' methods=['GET'])
 def get_link(link):
     found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
 
 # route to delete one link by its shortlink name:
 
-@app.route("/nodirect/delete/<link>")
+@app.route('/nodirect/links/<link>' methods=['DELETE'])
 def delete_link(link):
     link = db.session.query(Link).filter(Link.stored_link == link).first()
     db.session.delete(link)
@@ -102,7 +102,7 @@ def delete_link(link):
 
 # route to delete one link by its unique id:
 
-@app.route("/nodirect/delete/<id>")
+@app.route("/nodirect/links/<id>" methods=['DELETE'])
 def delete_link_by_id(id):
     link_by_id = db.session.query(Link).filter(Link.id == id).first()
     db.session.delete(link_by_id)
