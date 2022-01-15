@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
 
+
 # creates link class
 
 class Link(db.Model):
@@ -36,6 +37,17 @@ link_schema = LinkSchema()
 multiple_link_schema = LinkSchema(many=True)
 
 
+@app.route('/<link>', methods=['GET'])
+def direct(link):
+    direct_url = db.session.query(Link).filter(Link.stored_link == link).first()
+    if direct_url is not None:
+        if direct_url.stored_url.startswith('http://') or direct_url.stored_url.startswith('https://'):
+            parsed_url = direct_url.stored_url
+        else:
+            parsed_url = 'http://' + direct_url.stored_url
+        return redirect(parsed_url, code=301)
+    else:
+        return redirect('/nodirect', code=301)
 
 # route to add a new link:
 
@@ -112,13 +124,7 @@ def arrive_home():
 
 # redirect routes for stored links:
 
-@app.route('/<link>')
-def direct(link):
-    direct_url = db.session.query(Link).filter(Link.stored_link == link).first()
-    if direct_url is not None:
-        return redirect(url_for(direct_url.stored_url))
-    else:
-        return redirect('/nodirect')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
