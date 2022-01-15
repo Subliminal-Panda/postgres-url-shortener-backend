@@ -23,27 +23,27 @@ INTRODUCTION: BACKEND/API
 INTRODUCTION: USING THE APP
 ------------
 
-* This program is reasonably user-friendly, so it shouldn't be too tough to dive right in!
+- This program is reasonably user-friendly, so it shouldn't be too tough to dive right in!
 
-* I recommend running it inside codesandbox for the sake of simplicity. To get to it (if you're not in codesandbox already) navigate to the following URL:
+- I recommend running it inside codesandbox for the sake of simplicity. To get to it (if you're not in codesandbox already) navigate to the following URL:
 
 https://codesandbox.io/s/beautiful-noyce-j499o?
 
-*If you'd like to try this application outside codesandbox, skip down to CLONING AND RUNNING THE FRONTEND REPOSITORY.
+* If you'd like to try this application outside codesandbox, skip down to CLONING AND RUNNING THE FRONTEND REPOSITORY.
 
-* To enter a URL, click the input field titled "Enter a new URL:" and enter your desired destination URL.
+1. To enter a URL, click the input field titled "Enter a new URL:" and enter your desired destination URL.
 
-* It doesn't matter if it starts with a prefix of http://, https://, www., or even no prefix whatsoever! just make sure the URL is spelled correctly.
+- It doesn't matter if it starts with a prefix of http://, https://, www., or even no prefix whatsoever! just make sure the URL is spelled correctly.
 
-* If you would like to create your own custom short link, enter your desired link name in the "Custom short link (optional): input field. You can use spaces and special characters. Just keep in mind, if you write a short link that isn't short, it will overflow the display area. (It will still work, it just won't look very pretty.)
+2. If you would like to create your own custom short link, enter your desired link name in the "Custom short link (optional): input field. You can use spaces and special characters. Just keep in mind, if you write a short link that isn't short, it will overflow the display area. (It will still work, it just won't look very pretty.)
 
-* Click the green "Submit Url" button. The backend will automatically recognize whether you've created a custom short link. If not, it will generate a random 10 character link instead.
+3. Click the green "Submit Url" button. The backend will automatically recognize whether you've created a custom short link. If not, it will generate a random 10 character link instead.
 
-* It might take just a moment to update the list with your new URL and Short Link (free databases are prioritized last... sad.)
+- It might take just a moment to update the list with your new URL and Short Link (free databases are prioritized last... sad.)
 
-* Once your link appears, you can click either the URL itself (to the left) or the short link (on the right) to visit the URL you entered! It's magical!
+4. Once your link appears, you can click either the URL itself (to the left) or the short link (on the right) to visit the URL you entered! It's magical!
 
-* To delete a URL and its corresponding Short Link, just click the pink/red "Delete Link" button to the right, on the same row.
+5. To delete a URL and its corresponding Short Link, just click the pink/red "Delete Link" button to the right, on the same row.
 
 REQUIREMENTS: CODE SANDBOX
 ------------
@@ -126,6 +126,6 @@ CLONING AND RUNNING THE BACKEND REPOSITORY
 
   11. Alright, the backend is running on your local machine. Now, you'll have to change every endpoint in the frontend to wherever the database is running on your local machine. If you haven't already, follow the instructions in CLONING THE FRONTEND REPOSITORY.
 
-  12. Now, in your cloned front-end repository, replace all instances of "https://tm-url-shortener-backend.herokuapp.com/" (yes, it's a lot, but you can use VS Code's search if you use Visual Studio Code.) replace them all with the location where the database is running on your computer. The terminal should say *Running on (Most likely it will be: "http://127.0.0.1:5000/").
+  12. Now, in your cloned front-end repository, in Home.js, on line 12, delete "https://tm-url-shortener-backend.herokuapp.com" and replace it with the location where the database is running on your computer. The terminal should say *Running on (Most likely it will be: "http://127.0.0.1:5000/").
 
   13. Alright, you've got a working backend and frontend running on your computer! Baddabing!
