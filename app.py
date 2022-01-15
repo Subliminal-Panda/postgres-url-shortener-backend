@@ -78,44 +78,36 @@ def add_link():
 
 # route to retrieve all links:
 
-@app.route('/nodirect/links' methods=['GET'])
+@app.route('/nodirect/links', methods=['GET'])
 def get_all_links():
     all_links = db.session.query(Link).all()
     return jsonify(multiple_link_schema.dump(all_links))
 
 # route to retrieve one link:
 
-@app.route('/nodirect/links/<link>' methods=['GET'])
+@app.route('/nodirect/links/<link>', methods=['GET'])
 def get_link(link):
     found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
 
-# route to delete one link by its shortlink name:
-
-@app.route('/nodirect/links/<link>' methods=['DELETE'])
-def delete_link(link):
-    link = db.session.query(Link).filter(Link.stored_link == link).first()
-    db.session.delete(link)
-    db.session.commit()
-    successful = ["The following link has been deleted:", link_schema.dump(link)]
-    return jsonify(successful)
-
 # route to delete one link by its unique id:
 
-@app.route("/nodirect/links/<id>" methods=['DELETE'])
-def delete_link_by_id(id):
-    link_by_id = db.session.query(Link).filter(Link.id == id).first()
-    db.session.delete(link_by_id)
+@app.route('/nodirect/links/<link>', methods=['DELETE'])
+def delete_link(link):
+    link_to_delete = db.session.query(Link).filter(Link.id == link).first()
+    db.session.delete(link_to_delete)
     db.session.commit()
-    successful = ["The following link has been deleted:", link_schema.dump(link_by_id)]
+    successful = ["The following link has been deleted:", link_schema.dump(link_to_delete)]
     return jsonify(successful)
 
 # routes directing to main app page:
 
 @app.route('/')
+def send_home():
     return redirect('/nodirect')
 
 @app.route('/nodirect')
+def arrive_home():
     return "redirected to main application."
 
 # redirect routes for stored links:
