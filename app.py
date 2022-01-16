@@ -2,20 +2,26 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS, cross_origin
+
 import psycopg2
 import os
-
 import random
 import string
 
 app = Flask(__name__)
+
+api_v1_cors_config = {
+    "origins": ["http://localhost:5000", "http://localhost:3000", "https://j499o.csb.app"]
+}
+
+CORS(app, resources={
+    r"/*": api_v1_cors_config
+})
 basedir = os.path.abspath(os.path.dirname(__file__))
-# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-CORS(app)
-
 
 # creates link class
 
@@ -39,6 +45,7 @@ multiple_link_schema = LinkSchema(many=True)
 
 
 @app.route('/<link>')
+@cross_origin()
 def direct(link):
     direct_url = db.session.query(Link).filter(Link.stored_link == link).first()
     if direct_url is not None:
@@ -48,11 +55,13 @@ def direct(link):
             parsed_url = 'https://' + direct_url.stored_url
 
         response = redirect(parsed_url, code=302)
-        print("response", response)
+        # response.headers.add('Access-Control-Allow-Origin', '*')
+        # response.headers.remove('Access-Control-Allow-Origin')
 
         return response
     else:
         response = redirect('/nodirect', code=302)
+        # response.headers.add('Access-Control-Allow-Origin', '*')
 
         return response
 
@@ -121,13 +130,13 @@ def delete_link(link):
 
 # routes directing to main app page:
 
-@app.route('/')
-def send_home():
-    return redirect('/nodirect')
+# @app.route('/')
+# def send_home():
+#     return redirect('/nodirect')
 
-@app.route('/nodirect')
-def arrive_home():
-    return "redirected to main application."
+# @app.route('/nodirect')
+# def arrive_home():
+#     return "redirected to main application."
 
 # redirect routes for stored links:
 
