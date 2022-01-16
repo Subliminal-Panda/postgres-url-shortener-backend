@@ -54,13 +54,13 @@ def direct(link):
         else:
             parsed_url = 'https://' + direct_url.stored_url
 
-        response = redirect(parsed_url, code=302)
+        response = redirect(parsed_url, code=301)
         # response.headers.add('Access-Control-Allow-Origin', '*')
         # response.headers.remove('Access-Control-Allow-Origin')
 
         return response
     else:
-        response = redirect('/nodirect', code=302)
+        response = redirect('/nodirect', code=301)
         # response.headers.add('Access-Control-Allow-Origin', '*')
 
         return response
