@@ -78,13 +78,13 @@ def add_link():
 
         # generate random short link:
 
-        saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+        saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(7)])
         possible_duplicate = db.session.query(Link).filter(Link.stored_link == saved_link).first()
 
         # check for duplicates, re-generate random link until no duplicates are found:
 
         while possible_duplicate is not None:
-            saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10)])
+            saved_link = "".join([random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(7)])
             possible_duplicate = db.session.query(Link).filter(Link.stored_link == saved_link).first()
 
     # saves user input as short link, if it exists:
