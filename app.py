@@ -95,17 +95,21 @@ def add_link():
     # saves user input as short link, if it exists:
 
     else:
+        possible_duplicate = db.session.query(Link).filter(Link.stored_link == stored_link).first()
+        if possible_duplicate is not None:
+            return jsonify("Error: that link is already being used.", stored_link)
+
         saved_link = stored_link
 
-    # stores new link/url data in a variable, and saves it in the database:
+        # stores new link/url data in a variable, and saves it in the database:
 
-    new_link = Link(stored_url, saved_link)
+        new_link = Link(stored_url, saved_link)
 
-    db.session.add(new_link)
-    db.session.commit()
+        db.session.add(new_link)
+        db.session.commit()
 
-    successful = ["New link added to database:", link_schema.dump(new_link)]
-    return jsonify(successful)
+        successful = ["New link added to database:", link_schema.dump(new_link)]
+        return jsonify(successful)
 
 # route to retrieve all links:
 
