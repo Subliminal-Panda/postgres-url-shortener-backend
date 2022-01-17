@@ -46,7 +46,7 @@ multiple_link_schema = LinkSchema(many=True)
 @app.route('/nodirect')
 @cross_origin()
 def go_to_front():
-    return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
+    return redirect('https://tm57.herokuapp.com/', code=301)
 
 @app.route('/<link>')
 @cross_origin()
@@ -59,12 +59,12 @@ def direct(link):
             parsed_url = 'https://' + direct_url.stored_url
         return redirect(parsed_url, code=301)
     else:
-        return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
+        return redirect('https://tm57.herokuapp.com/', code=301)
 
 @app.route('/')
 @cross_origin()
 def go_to_home():
-    return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
+    return redirect('https://tm57.herokuapp.com/', code=301)
 
 # route to add a new link:
 
