@@ -11,7 +11,7 @@ import string
 app = Flask(__name__)
 
 api_v1_cors_config = {
-    "origins": ["http://localhost:5000", "http://localhost:3000", "https://j499o.csb.app"]
+    "origins": ["http://localhost:5000", "http://localhost:3000", "https://j499o.csb.app", "http://127.0.0.1:3000", "http://127.0.0.1:5000", "https://tm-url-shortener-frontend.herokuapp.com/"]
 }
 
 CORS(app, resources={
@@ -53,21 +53,14 @@ def direct(link):
             parsed_url = direct_url.stored_url
         else:
             parsed_url = 'https://' + direct_url.stored_url
-
-        response = redirect(parsed_url, code=301)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        # response.headers.remove('Access-Control-Allow-Origin')
-
-        return response
+        return redirect(parsed_url, code=301)
     else:
-        response = redirect('/nodirect', code=301)
-        # response.headers.add('Access-Control-Allow-Origin', '*')
-
-        return response
+        return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
 
 # route to add a new link:
 
 @app.route('/nodirect/links', methods=['POST'])
+@cross_origin()
 def add_link():
     if request.content_type != 'application/json':
         return jsonify("Error: Data must be formatted as JSON.")
@@ -107,6 +100,7 @@ def add_link():
 # route to retrieve all links:
 
 @app.route('/nodirect/links', methods=['GET'])
+@cross_origin()
 def get_all_links():
     all_links = db.session.query(Link).all()
     return jsonify(multiple_link_schema.dump(all_links))
@@ -114,6 +108,7 @@ def get_all_links():
 # route to retrieve one link:
 
 @app.route('/nodirect/links/<link>', methods=['GET'])
+@cross_origin()
 def get_link(link):
     found_link = db.session.query(Link).filter(Link.stored_link == link).first()
     return jsonify(link_schema.dump(found_link))
@@ -121,26 +116,13 @@ def get_link(link):
 # route to delete one link by its unique id:
 
 @app.route('/nodirect/links/<link>', methods=['DELETE'])
+@cross_origin()
 def delete_link(link):
     link_to_delete = db.session.query(Link).filter(Link.id == link).first()
     db.session.delete(link_to_delete)
     db.session.commit()
     successful = ["The following link has been deleted:", link_schema.dump(link_to_delete)]
     return jsonify(successful)
-
-# routes directing to main app page:
-
-# @app.route('/')
-# def send_home():
-#     return redirect('/nodirect')
-
-# @app.route('/nodirect')
-# def arrive_home():
-#     return "redirected to main application."
-
-# redirect routes for stored links:
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
