@@ -57,6 +57,11 @@ def direct(link):
     else:
         return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
 
+@app.route('/')
+@cross_origin()
+def go_to_home()
+    return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
+
 # route to add a new link:
 
 @app.route('/nodirect/links', methods=['POST'])
