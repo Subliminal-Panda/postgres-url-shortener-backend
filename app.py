@@ -18,8 +18,8 @@ CORS(app, resources={
     r"/*": api_v1_cors_config
 })
 basedir = os.path.abspath(os.path.dirname(__file__))
-# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
@@ -43,6 +43,10 @@ class LinkSchema(ma.Schema):
 link_schema = LinkSchema()
 multiple_link_schema = LinkSchema(many=True)
 
+@app.route('/nodirect')
+@cross_origin()
+def go_to_front():
+    return redirect('https://tm-url-shortener-frontend.herokuapp.com/', code=301)
 
 @app.route('/<link>')
 @cross_origin()
