@@ -11,15 +11,15 @@ import string
 app = Flask(__name__)
 
 api_v1_cors_config = {
-    "origins": ["http://localhost:5000", "http://localhost:3000", "https://j499o.csb.app", "http://127.0.0.1:3000", "http://127.0.0.1:5000", "https://tm-url-shortener-frontend.herokuapp.com"]
+    "origins": ["*"]
 }
 
 CORS(app, resources={
     r"/*": api_v1_cors_config
 })
 basedir = os.path.abspath(os.path.dirname(__file__))
-# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://wmmkxwfjbkfgae:c81ac8f539fa168b3e6e2575be7ef7dabdac4ece4938ee4ca87cd86a5887d73a@ec2-54-157-15-228.compute-1.amazonaws.com:5432/d6nn4l84c8d1kc"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
