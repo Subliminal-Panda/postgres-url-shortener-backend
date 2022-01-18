@@ -103,13 +103,13 @@ def add_link():
 
         # stores new link/url data in a variable, and saves it in the database:
 
-        new_link = Link(stored_url, saved_link)
+    new_link = Link(stored_url, saved_link)
 
-        db.session.add(new_link)
-        db.session.commit()
+    db.session.add(new_link)
+    db.session.commit()
 
-        successful = ["New link added to database:", link_schema.dump(new_link)]
-        return jsonify(successful)
+    successful = ["New link added to database:", link_schema.dump(new_link)]
+    return jsonify(successful)
 
 # route to retrieve all links:
 
