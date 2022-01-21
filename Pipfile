@@ -14,6 +14,7 @@ marshmallow-sqlalchemy = "*"
 nose = "*"
 cors = "*"
 flask-bcrypt = "*"
+bcrypt = "*"
 
 [dev-packages]
 
