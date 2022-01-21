@@ -13,6 +13,7 @@ gunicorn = "*"
 marshmallow-sqlalchemy = "*"
 nose = "*"
 cors = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 
