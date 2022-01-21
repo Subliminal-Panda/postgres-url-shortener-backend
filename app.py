@@ -16,7 +16,7 @@ front_end = "https://tm57.herokuapp.com/"
 # front_end = "http://localhost:3000/"
 
 api_v1_cors_config = {
-    "origins": [front_end, "*"]
+    "origins": [front_end]
 }
 
 CORS(app, resources={
