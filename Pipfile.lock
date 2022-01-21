@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "04e8fbf9e5f161c7ed05198c27535f6d17036f420f6328f589848b3d6568cd39"
+            "sha256": "eb536e81a74017989498e6f230247acaffb41c1265473c0d89d5a9438592cb57"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -99,7 +99,6 @@
                 "sha256:fd8a250edc26254fe5b33be00402e6d287f562b6a5b2152dec302fa15bb3e997",
                 "sha256:ffaa5c925128e29efbde7301d8ecaf35c8c60ffbcd6a1ffd3a552177c8e5e796"
             ],
-            "markers": "platform_python_implementation == 'CPython' and sys_platform == 'win32'",
             "version": "==1.15.0"
         },
         "charset-normalizer": {
@@ -123,7 +122,7 @@
                 "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
                 "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
             ],
-            "markers": "platform_system == 'Windows'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==0.4.4"
         },
         "cors": {
@@ -133,6 +132,14 @@
             ],
             "index": "pypi",
             "version": "==1.0.1"
+        },
+        "dependencies": {
+            "hashes": [
+                "sha256:0aa760547410f6d440f7331e11cfbcd8507a58eeb302c7c465ebec3f410e8778",
+                "sha256:59de310843d5fd31e6e97fc406be8f6b47ee2c0db05e8cc011d893616aa421bc"
+            ],
+            "index": "pypi",
+            "version": "==7.1.6"
         },
         "filelock": {
             "hashes": [
@@ -285,7 +292,7 @@
                 "sha256:fa877ca7f6b48054f847b61d6fa7bed5cebb663ebc55e018fda12db09dcc664c",
                 "sha256:fdcec0b8399108577ec290f55551d926d9a1fa6cad45882093a7a07ac5ec147b"
             ],
-            "markers": "platform_python_implementation == 'CPython' and python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
+            "markers": "python_version >= '3' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32'))))))",
             "version": "==1.1.2"
         },
         "gunicorn": {
@@ -467,6 +474,14 @@
                 "sha256:dfe5dae75c12481f68ba353183c53a65e6044c923e64c24b2209f6c7570ca953"
             ],
             "version": "==1.5.1"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:2404879cda71495fc4d5cbc445ed52fdaddf352b36e40be8dcc63147cb4edabe",
+                "sha256:68eb94073fc486091447fcb0501efd6560a0e5a1839ba249e5ff3c4c93f05f90"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==60.5.0"
         },
         "six": {
             "hashes": [
