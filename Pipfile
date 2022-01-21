@@ -5,16 +5,16 @@ name = "pypi"
 
 [packages]
 flask = "*"
+bcrypt = "*"
+cors = "*"
+nose = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 flask-cors = "*"
+marshmallow-sqlalchemy = "*"
 psycopg2 = "*"
 gunicorn = "*"
-marshmallow-sqlalchemy = "*"
-nose = "*"
-cors = "*"
 flask-bcrypt = "*"
-bcrypt = "*"
 
 [dev-packages]
 
