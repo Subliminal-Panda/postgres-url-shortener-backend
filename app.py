@@ -23,6 +23,7 @@ CORS(app, resources={
     r"/*": api_v1_cors_config
 })
 basedir = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://sloabsfhasunji:7d21e7a2fe75583ae579a546a16f49685564875068eb835f798f50d3e67ec9c7@ec2-44-194-101-60.compute-1.amazonaws.com:5432/d7raep2geukpro"
 # app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DEV_DATABASE_URL') or \
 #     'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
@@ -254,12 +255,6 @@ def go_to_home():
 @cross_origin()
 def go_to_front():
     return redirect(front_end, code=301)
-
-@app.route('/create/db/fsad4f5645t4w5645sd64v5xc6z4568etw78964sd5f1')
-@cross_origin
-def start_db():
-    from app import db
-    db.create_all()
 
 if __name__ == "__main__":
     app.run(debug=True)
