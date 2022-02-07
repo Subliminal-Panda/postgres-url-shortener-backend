@@ -23,8 +23,11 @@ CORS(app, resources={
     r"/*": api_v1_cors_config
 })
 basedir = os.path.abspath(os.path.dirname(__file__))
-uri = os.environ.get('DATABASE_URL')
-uri = uri.replace('postgres', 'postgresql', 1)
+find_uri = os.environ.get('DATABASE_URL')
+if find_uri is not None:
+    uri = find_uri.replace('postgres', 'postgresql', 1)
+else:
+    uri = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
 # "postgresql://sloabsfhasunji:7d21e7a2fe75583ae579a546a16f49685564875068eb835f798f50d3e67ec9c7@ec2-44-194-101-60.compute-1.amazonaws.com:5432/d7raep2geukpro"
