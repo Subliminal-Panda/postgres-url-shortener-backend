@@ -28,7 +28,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://sloabsfhasunji:7d21e7a2fe7
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-print("environ:", os.environ)
+print("environ:", os.environ.get('DATABASE_URL'))
 
 # creates link class
 
