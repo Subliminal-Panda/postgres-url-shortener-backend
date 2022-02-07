@@ -255,5 +255,11 @@ def go_to_home():
 def go_to_front():
     return redirect(front_end, code=301)
 
+@app.route('/create/db/fsad4f5645t4w5645sd64v5xc6z4568etw78964sd5f1')
+@cross_origin
+def start_db():
+    from app import db
+    db.create_all()
+
 if __name__ == "__main__":
     app.run(debug=True)
