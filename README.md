@@ -101,7 +101,7 @@ https://github.com/npm/npm/archive/refs/tags/v5.2.0.zip
 
 8.  Start python:
 
-        $ python
+        $ pipenv run python
 
 9.  Run the following commands using Python:
 
@@ -110,7 +110,7 @@ https://github.com/npm/npm/archive/refs/tags/v5.2.0.zip
 
 10. If that doesn't return any errors, your test environment database is created! Now let's get it running:
 
-        $ python app.py
+        $ pipenv run python app.py
 
 11. Alright, the backend is running on your local machine. Next, if you haven't already, follow the instructions in CLONING THE FRONTEND REPOSITORY.
 
